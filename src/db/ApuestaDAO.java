@@ -13,14 +13,13 @@ public class ApuestaDAO {
 
     // INSERT
     public static void guardar(DatoOro d) {
-        String sql = "INSERT INTO apuestas (nombre_jugador, fecha, num1, num2, num3, num4, num5, num6, num7, simple, revancha, costo_total) "
-                   + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO apuestas (nombre_jugador, fecha, num1, num2, num3, num4, num5, num6, num7, num8, simple, revancha, costo_total) "
+                   + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection cn = ConexionMySQL.conectarDB();
              PreparedStatement ps = cn.prepareStatement(sql)) {
 
             ps.setString(1, d.getNombreJugador());
-            // suponiendo que d.getFecha() es java.util.Date
             ps.setDate(2, new java.sql.Date(d.getFecha().getTime()));
             ps.setInt(3, d.getNum1());
             ps.setInt(4, d.getNum2());
@@ -29,9 +28,10 @@ public class ApuestaDAO {
             ps.setInt(7, d.getNum5());
             ps.setInt(8, d.getNum6());
             ps.setInt(9, d.getNum7());
-            ps.setBoolean(10, d.isSimple());
-            ps.setBoolean(11, d.isRevancha());
-            ps.setDouble(12, d.getCostoTotal());
+            ps.setInt(10, d.getNum8());
+            ps.setBoolean(11, d.isSimple());
+            ps.setBoolean(12, d.isRevancha());
+            ps.setDouble(13, d.getCostoTotal());
 
             ps.executeUpdate();
 
@@ -61,6 +61,7 @@ public class ApuestaDAO {
                 d.setNum5(rs.getInt("num5"));
                 d.setNum6(rs.getInt("num6"));
                 d.setNum7(rs.getInt("num7"));
+                d.setNum8(rs.getInt("num8"));
                 d.setSimple(rs.getBoolean("simple"));
                 d.setRevancha(rs.getBoolean("revancha"));
                 d.setCostoTotal(rs.getDouble("costo_total"));
@@ -74,7 +75,7 @@ public class ApuestaDAO {
         return lista;
     }
 
-    // Algunas estadísticas básicas
+    // Estadísticas básicas
     public static int contarApuestas() {
         String sql = "SELECT COUNT(*) FROM apuestas";
         try (Connection cn = ConexionMySQL.conectarDB();
@@ -100,6 +101,32 @@ public class ApuestaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
-    }
+        return 0;
+    }
+
+    // Obtener los números más jugados
+    public static int[] contarNumeros() {
+        int[] conteo = new int[49]; // índice 0 no se usa, del 1 al 48
+        
+        String sql = "SELECT num1, num2, num3, num4, num5, num6, num7, num8 FROM apuestas";
+        
+        try (Connection cn = ConexionMySQL.conectarDB();
+             PreparedStatement ps = cn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            
+            while (rs.next()) {
+                for (int i = 1; i <= 8; i++) {
+                    int num = rs.getInt("num" + i);
+                    if (num > 0 && num <= 48) {
+                        conteo[num]++;
+                    }
+                }
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return conteo;
+    }
 }

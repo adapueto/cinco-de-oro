@@ -153,7 +153,35 @@ public class DatoOro {
 		return 0;
 	}
 	
-	
-	
-	
+	public static double calcularPrecioMultiple(int cantidadNumeros, boolean revancha) {
+		int numCombinaciones = 0;
+		
+		// Calcular número de combinaciones según cantidad de números
+		switch (cantidadNumeros) {
+			case 4:
+				numCombinaciones = 1;   // 4 números + 1 fijo del sorteo = 1 combinación
+				break;
+			case 6:
+				numCombinaciones = 6;   // C(6,5) = 6
+				break;
+			case 7:
+				numCombinaciones = 21;  // C(7,5) = 21
+				break;
+			case 8:
+				numCombinaciones = 56;  // C(8,5) = 56
+				break;
+			default:
+				numCombinaciones = 1;   // Simple (1 combinación)
+		}
+		
+		// Precio base: $45 por combinación
+		double precioBase = numCombinaciones * 45;
+		
+		// Revancha: $20 adicionales POR CADA COMBINACIÓN
+		if (revancha) {
+			precioBase += numCombinaciones * 20;
+		}
+		
+		return precioBase;
+	}
 }

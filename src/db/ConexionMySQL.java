@@ -12,7 +12,7 @@ public class ConexionMySQL {
 	// Datos para realizar la conexión con la base de datos
 		private static String usuario = "root";
 		private static String pass = "123456789";
-		private static String baseDeDatos = "banco2mn";
+		private static String baseDeDatos = "cincodeorobd";
 		private static String url = "jdbc:mysql://localhost:3306/" + baseDeDatos + "?useSSL=false&serverTimezone=UTC";
 
 		// objetos que manipulan/actualizan la base de datos

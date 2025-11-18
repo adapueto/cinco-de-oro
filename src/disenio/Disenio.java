@@ -20,6 +20,7 @@ public class Disenio extends JFrame {
 	private JPanel panelPrincipal = null;
 	private static PanelSimple crearApuestaSimple = new PanelSimple();
 	private static PanelMultiple crearApuestaMultiple = new PanelMultiple();
+	private static PanelSorteo crearSorteo = new PanelSorteo();
 	private static PanelEstadistica crearEstadistica = new PanelEstadistica();
 
 	/**
@@ -56,6 +57,8 @@ public class Disenio extends JFrame {
 		JButton btnSimple = new JButton("Simple");
 		btnSimple.setForeground(new Color(255, 255, 255));
 		btnSimple.setBackground(new Color(65, 105, 225));
+		btnSimple.setOpaque(true);
+		btnSimple.setBorderPainted(false);
 		btnSimple.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -85,6 +88,8 @@ public class Disenio extends JFrame {
 		btnMultiple.setBackground(new Color(65, 105, 225));
 		btnMultiple.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnMultiple.setBounds(243, 11, 204, 29);
+		btnMultiple.setOpaque(true);
+		btnMultiple.setBorderPainted(false);
 		pnlMenu.add(btnMultiple);
 		
 		JButton btnSorteo = new JButton("Sorteo");
@@ -95,6 +100,7 @@ public class Disenio extends JFrame {
 				contentPane.remove(crearApuestaSimple);
 				contentPane.remove(crearApuestaMultiple);
 				contentPane.remove(crearEstadistica);
+				contentPane.add(crearSorteo);
 				repaint();
 			}
 		});
@@ -102,16 +108,22 @@ public class Disenio extends JFrame {
 		btnSorteo.setBackground(new Color(65, 105, 225));
 		btnSorteo.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnSorteo.setBounds(473, 11, 204, 29);
+		btnSorteo.setOpaque(true);
+		btnSorteo.setBorderPainted(false);
 		pnlMenu.add(btnSorteo);
 		
 		JButton btnEstadistica = new JButton("Estadística");
-		btnSorteo.addActionListener(new ActionListener() {
+		btnEstadistica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				contentPane.remove(panelPrincipal);
 				contentPane.remove(crearApuestaSimple);
 				contentPane.remove(crearApuestaMultiple);
 				contentPane.add(crearEstadistica);
+				
+				// Cargar estadísticas cuando se muestra el panel
+				crearEstadistica.cargarEstadisticas();
+				
 				repaint();
 			}
 		});
@@ -119,6 +131,8 @@ public class Disenio extends JFrame {
 		btnEstadistica.setBackground(new Color(65, 105, 225));
 		btnEstadistica.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnEstadistica.setBounds(704, 11, 204, 29);
+		btnEstadistica.setOpaque(true);
+		btnEstadistica.setBorderPainted(false);
 		pnlMenu.add(btnEstadistica);
 		
 		panelPrincipal = new JPanel();

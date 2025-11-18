@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 
 import datos.DatoOro;
+import db.ApuestaDAO;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
@@ -56,7 +57,7 @@ public class PanelSimple extends JPanel {
 		pnlCreacionJugador.setLayout(null);
 		
 		JLabel lblJugador = new JLabel("Nombre Jugador:");
-		lblJugador.setForeground(new Color(0, 0, 0));
+		lblJugador.setForeground(new Color(255, 255, 255));
 		lblJugador.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblJugador.setBounds(89, 20, 188, 51);
 		pnlCreacionJugador.add(lblJugador);
@@ -70,13 +71,13 @@ public class PanelSimple extends JPanel {
 		fechaActual = new Date();
 		
 		JLabel lblFecha = new JLabel("Fecha: " + miFormatoFecha.format(fechaActual));
-		lblFecha.setForeground(new Color(0, 0, 0));
+		lblFecha.setForeground(new Color(255, 255, 255));
 		lblFecha.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblFecha.setBounds(537, 11, 314, 67);
 		pnlCreacionJugador.add(lblFecha);
 		
 		JLabel lblaviso = new JLabel("Despues se va a cambiar a mayúsculas");
-		lblaviso.setForeground(new Color(0, 0, 0));
+		lblaviso.setForeground(new Color(255, 255, 255));
 		lblaviso.setBounds(89, 64, 290, 14);
 		pnlCreacionJugador.add(lblaviso);
 		
@@ -87,7 +88,7 @@ public class PanelSimple extends JPanel {
 		pnlApuestaS.setLayout(null);
 		
 		JLabel lblNumeros = new JLabel("Numeros:");
-		lblNumeros.setForeground(new Color(0, 0, 0));
+		lblNumeros.setForeground(new Color(255, 255, 255));
 		lblNumeros.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNumeros.setBounds(69, 12, 134, 67);
 		pnlApuestaS.add(lblNumeros);
@@ -229,9 +230,23 @@ public class PanelSimple extends JPanel {
 		            datos.setSimple(true);
 		            datos.setCostoTotal(costo);
 
+		            // Guardar en base de datos
+		            ApuestaDAO.guardar(datos);
+
 		            JOptionPane.showMessageDialog(null,
-		                "Apuesta creada correctamente.\nJugador: "
-		                + datos.getNombreJugador() + "\nCosto: $" + datos.getCostoTotal());
+		                "✅ Apuesta guardada exitosamente!\n\n"
+		                + "Jugador: " + datos.getNombreJugador() + "\n"
+		                + "Números: " + num1 + ", " + num2 + ", " + num3 + ", " + num4 + ", " + num5 + "\n"
+		                + "Revancha: " + (datos.isRevancha() ? "SÍ" : "NO") + "\n"
+		                + "Costo: $" + datos.getCostoTotal(),
+		                "Apuesta Registrada",
+		                JOptionPane.INFORMATION_MESSAGE);
+
+		            // Limpiar campos
+		            textField_jugador.setText("");
+		            limpiarCamposNumeros();
+		            chckbxRevancha.setSelected(false);
+		            textField_jugador.requestFocus();
 
 		        } catch (NumberFormatException ex) {
 
