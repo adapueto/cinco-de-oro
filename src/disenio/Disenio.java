@@ -20,6 +20,7 @@ public class Disenio extends JFrame {
 	private JPanel panelPrincipal = null;
 	private static PanelSimple crearApuestaSimple = new PanelSimple();
 	private static PanelMultiple crearApuestaMultiple = new PanelMultiple();
+	private static PanelEstadistica crearEstadistica = new PanelEstadistica();
 
 	/**
 	 * Create the frame.
@@ -60,6 +61,7 @@ public class Disenio extends JFrame {
 				
 				contentPane.remove(panelPrincipal);
 				contentPane.remove(crearApuestaMultiple);
+				contentPane.remove(crearEstadistica);
 				contentPane.add(crearApuestaSimple);
 				repaint();
 			}
@@ -74,6 +76,7 @@ public class Disenio extends JFrame {
 				
 				contentPane.remove(panelPrincipal);
 				contentPane.remove(crearApuestaSimple);
+				contentPane.remove(crearEstadistica);
 				contentPane.add(crearApuestaMultiple);
 				repaint();
 			}
@@ -85,6 +88,16 @@ public class Disenio extends JFrame {
 		pnlMenu.add(btnMultiple);
 		
 		JButton btnSorteo = new JButton("Sorteo");
+		btnSorteo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				contentPane.remove(panelPrincipal);
+				contentPane.remove(crearApuestaSimple);
+				contentPane.remove(crearApuestaMultiple);
+				contentPane.remove(crearEstadistica);
+				repaint();
+			}
+		});
 		btnSorteo.setForeground(new Color(255, 255, 255));
 		btnSorteo.setBackground(new Color(65, 105, 225));
 		btnSorteo.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -92,6 +105,16 @@ public class Disenio extends JFrame {
 		pnlMenu.add(btnSorteo);
 		
 		JButton btnEstadistica = new JButton("Estadística");
+		btnSorteo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				contentPane.remove(panelPrincipal);
+				contentPane.remove(crearApuestaSimple);
+				contentPane.remove(crearApuestaMultiple);
+				contentPane.add(crearEstadistica);
+				repaint();
+			}
+		});
 		btnEstadistica.setForeground(new Color(255, 255, 255));
 		btnEstadistica.setBackground(new Color(65, 105, 225));
 		btnEstadistica.setFont(new Font("Tahoma", Font.BOLD, 15));
